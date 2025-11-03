@@ -27,9 +27,6 @@ export class ReportsService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
-  /**
-   * Start report generation
-   */
   async generateReport(
     generateReportDto: GenerateReportDto,
   ): Promise<ReportJob> {
@@ -62,9 +59,6 @@ export class ReportsService {
     return savedJob;
   }
 
-  /**
-   * Process report generation asynchronously
-   */
   private async processReportAsync(
     jobId: string,
     filters: GenerateReportDto,
@@ -113,9 +107,6 @@ export class ReportsService {
     }
   }
 
-  /**
-   * Fetch products based on filters
-   */
   private async fetchProducts(filters: GenerateReportDto): Promise<Product[]> {
     const queryBuilder = this.productRepository
       .createQueryBuilder('product')
@@ -175,9 +166,6 @@ export class ReportsService {
     return await queryBuilder.getMany();
   }
 
-  /**
-   * Generate file (CSV or XLSX)
-   */
   private async generateFile(
     format: ReportFormat,
     products: Product[],
@@ -202,9 +190,6 @@ export class ReportsService {
     return filePath;
   }
 
-  /**
-   * Generate CSV file
-   */
   private async generateCSV(
     filePath: string,
     products: Product[],
@@ -237,9 +222,6 @@ export class ReportsService {
     });
   }
 
-  /**
-   * Generate XLSX file
-   */
   private async generateXLSX(
     filePath: string,
     products: Product[],
@@ -263,9 +245,6 @@ export class ReportsService {
     XLSX.writeFile(workbook, filePath);
   }
 
-  /**
-   * Get report job status
-   */
   async getJobStatus(jobId: string): Promise<ReportJob> {
     const job = await this.reportJobRepository.findOne({
       where: { id: jobId },
@@ -278,9 +257,6 @@ export class ReportsService {
     return job;
   }
 
-  /**
-   * Get all report jobs
-   */
   async getAllJobs(): Promise<ReportJob[]> {
     return await this.reportJobRepository.find({
       order: { createdAt: 'DESC' },
@@ -288,9 +264,6 @@ export class ReportsService {
     });
   }
 
-  /**
-   * Download report file
-   */
   async downloadReport(
     jobId: string,
   ): Promise<{ filePath: string; fileName: string }> {
@@ -321,9 +294,6 @@ export class ReportsService {
     };
   }
 
-  /**
-   * Delete old expired reports (cleanup)
-   */
   async cleanupExpiredReports(): Promise<void> {
     const expiredJobs = await this.reportJobRepository
       .createQueryBuilder('report')

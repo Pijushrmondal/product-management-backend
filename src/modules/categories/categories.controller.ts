@@ -19,7 +19,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { SearchPaginationDto } from './dto/category.dto';
 
 @Controller('categories')
-@UseGuards(JwtAuthGuard) // Protect all routes with JWT authentication
+@UseGuards(JwtAuthGuard)
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 

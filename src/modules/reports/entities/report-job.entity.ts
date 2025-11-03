@@ -69,5 +69,5 @@ export class ReportJob {
   completedAt: Date;
 
   @Column({ type: 'timestamp', nullable: true })
-  expiresAt: Date; // Report file expiration (e.g., 24 hours)
+  expiresAt: Date;
 }

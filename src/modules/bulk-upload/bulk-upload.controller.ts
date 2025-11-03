@@ -22,10 +22,6 @@ import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 export class BulkUploadController {
   constructor(private readonly bulkUploadService: BulkUploadService) {}
 
-  /**
-   * Upload CSV/XLSX file for bulk product import
-   * POST /api/bulk-upload
-   */
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
   @UseInterceptors(
@@ -71,10 +67,6 @@ export class BulkUploadController {
     };
   }
 
-  /**
-   * Get upload job status
-   * GET /api/bulk-upload/status/:jobId
-   */
   @Get('status/:jobId')
   async getJobStatus(@Param('jobId') jobId: string) {
     const job = await this.bulkUploadService.getJobStatus(jobId);
@@ -90,10 +82,6 @@ export class BulkUploadController {
     };
   }
 
-  /**
-   * Get all upload jobs
-   * GET /api/bulk-upload/jobs
-   */
   @Get('jobs')
   async getAllJobs() {
     return await this.bulkUploadService.getAllJobs();

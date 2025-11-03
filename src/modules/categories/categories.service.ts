@@ -23,9 +23,6 @@ export class CategoriesService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
-  /**
-   * Create a new category
-   */
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     // Check if category with same name already exists
     const existingCategory = await this.categoryRepository.findOne({
@@ -41,9 +38,6 @@ export class CategoriesService {
     return await this.categoryRepository.save(category);
   }
 
-  /**
-   * Get all categories with pagination
-   */
   async findAll(
     paginationDto: PaginationDto,
   ): Promise<PaginatedResponse<Category>> {
@@ -66,18 +60,12 @@ export class CategoriesService {
     };
   }
 
-  /**
-   * Get all categories without pagination (for dropdown lists)
-   */
   async findAllWithoutPagination(): Promise<Category[]> {
     return await this.categoryRepository.find({
       order: { name: 'ASC' },
     });
   }
 
-  /**
-   * Search categories by name
-   */
   async search(
     paginationDto: SearchPaginationDto,
   ): Promise<PaginatedResponse<Category>> {
@@ -103,9 +91,6 @@ export class CategoriesService {
     };
   }
 
-  /**
-   * Get a single category by ID
-   */
   async findOne(id: string): Promise<Category> {
     const category = await this.categoryRepository.findOne({
       where: { id },
@@ -118,9 +103,6 @@ export class CategoriesService {
     return category;
   }
 
-  /**
-   * Get a category by uniqueId
-   */
   async findByUniqueId(uniqueId: string): Promise<Category> {
     const category = await this.categoryRepository.findOne({
       where: { uniqueId },
@@ -135,9 +117,6 @@ export class CategoriesService {
     return category;
   }
 
-  /**
-   * Update a category
-   */
   async update(
     id: string,
     updateCategoryDto: UpdateCategoryDto,
@@ -164,9 +143,6 @@ export class CategoriesService {
     return await this.categoryRepository.save(category);
   }
 
-  /**
-   * Delete a category
-   */
   async remove(id: string): Promise<{ message: string }> {
     const category = await this.categoryRepository.findOne({ where: { id } });
 

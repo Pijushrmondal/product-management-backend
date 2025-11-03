@@ -20,9 +20,6 @@ export class ProductsService {
     private readonly categoriesService: CategoriesService,
   ) {}
 
-  /**
-   * Create a new product
-   */
   async create(createProductDto: CreateProductDto): Promise<Product> {
     // Verify category exists
     await this.categoriesService.findOne(createProductDto.categoryId);
@@ -32,9 +29,6 @@ export class ProductsService {
     return await this.productRepository.save(product);
   }
 
-  /**
-   * Get all products with advanced filtering, searching, sorting, and pagination
-   */
   async findAll(
     filterDto: FilterProductDto,
   ): Promise<PaginatedResponse<Product>> {
@@ -87,9 +81,6 @@ export class ProductsService {
     };
   }
 
-  /**
-   * Get a single product by ID
-   */
   async findOne(id: string): Promise<Product> {
     const product = await this.productRepository.findOne({
       where: { id },
@@ -103,9 +94,6 @@ export class ProductsService {
     return product;
   }
 
-  /**
-   * Get a product by uniqueId
-   */
   async findByUniqueId(uniqueId: string): Promise<Product> {
     const product = await this.productRepository.findOne({
       where: { uniqueId },
@@ -121,9 +109,6 @@ export class ProductsService {
     return product;
   }
 
-  /**
-   * Update a product
-   */
   async update(
     id: string,
     updateProductDto: UpdateProductDto,
@@ -147,9 +132,6 @@ export class ProductsService {
     return this.findOne(id);
   }
 
-  /**
-   * Delete a product
-   */
   async remove(id: string): Promise<{ message: string }> {
     const product = await this.productRepository.findOne({ where: { id } });
 
@@ -164,16 +146,10 @@ export class ProductsService {
     };
   }
 
-  /**
-   * Get total products count
-   */
   async count(): Promise<number> {
     return this.productRepository.count();
   }
 
-  /**
-   * Get products by category
-   */
   async findByCategory(
     categoryId: string,
     filterDto: FilterProductDto,

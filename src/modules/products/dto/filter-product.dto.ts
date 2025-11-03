@@ -9,17 +9,17 @@ export enum SortOrder {
 export class FilterProductDto extends PaginationDto {
   @IsOptional()
   @IsString()
-  search?: string; // Search by product name
+  search?: string;
 
   @IsOptional()
   @IsUUID('4', { message: 'Invalid category ID' })
-  categoryId?: string; // Filter by category
+  categoryId?: string;
 
   @IsOptional()
   @IsString()
-  categoryName?: string; // Filter by category name
+  categoryName?: string;
 
   @IsOptional()
   @IsEnum(SortOrder)
-  sortByPrice?: SortOrder; // Sort by price ASC or DESC
+  sortByPrice?: SortOrder;
 }

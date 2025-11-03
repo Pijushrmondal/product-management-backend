@@ -18,9 +18,6 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  /**
-   * Create a new user
-   */
   async create(createUserDto: CreateUserDto): Promise<User> {
     // Check if user already exists
     const existingUser = await this.userRepository.findOne({
@@ -39,9 +36,6 @@ export class UsersService {
     return this.findOne(savedUser.id);
   }
 
-  /**
-   * Get all users with pagination
-   */
   async findAll(
     paginationDto: PaginationDto,
   ): Promise<PaginatedResponse<User>> {
@@ -65,9 +59,6 @@ export class UsersService {
     };
   }
 
-  /**
-   * Get a single user by ID
-   */
   async findOne(id: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id },
@@ -81,10 +72,6 @@ export class UsersService {
     return user;
   }
 
-  /**
-   * Find user by email (used for authentication)
-   * This method includes password for authentication purposes
-   */
   async findByEmail(email: string): Promise<User | null> {
     return this.userRepository.findOne({
       where: { email },
@@ -92,9 +79,6 @@ export class UsersService {
     });
   }
 
-  /**
-   * Update a user
-   */
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id },
@@ -124,9 +108,6 @@ export class UsersService {
     return this.findOne(id);
   }
 
-  /**
-   * Delete a user
-   */
   async remove(id: string): Promise<{ message: string }> {
     const user = await this.userRepository.findOne({ where: { id } });
 
@@ -141,9 +122,6 @@ export class UsersService {
     };
   }
 
-  /**
-   * Get total users count
-   */
   async count(): Promise<number> {
     return this.userRepository.count();
   }

@@ -31,9 +31,6 @@ export class BulkUploadService {
     private readonly categoriesService: CategoriesService,
   ) {}
 
-  /**
-   * Start bulk upload process
-   */
   async startUpload(file: Express.Multer.File): Promise<UploadJob> {
     // Validate file type
     const allowedExtensions = ['.csv', '.xlsx', '.xls'];
@@ -65,9 +62,6 @@ export class BulkUploadService {
     return savedJob;
   }
 
-  /**
-   * Process file asynchronously
-   */
   private async processFileAsync(
     jobId: string,
     filePath: string,
@@ -119,9 +113,6 @@ export class BulkUploadService {
     }
   }
 
-  /**
-   * Parse CSV file
-   */
   private async parseCSV(filePath: string): Promise<ProductRow[]> {
     return new Promise((resolve, reject) => {
       const rows: ProductRow[] = [];
@@ -140,9 +131,6 @@ export class BulkUploadService {
     });
   }
 
-  /**
-   * Parse Excel file
-   */
   private async parseExcel(filePath: string): Promise<ProductRow[]> {
     const workbook = XLSX.readFile(filePath);
     const sheetName = workbook.SheetNames[0];
@@ -151,9 +139,6 @@ export class BulkUploadService {
     return rows;
   }
 
-  /**
-   * Process rows in batches
-   */
   private async processRows(jobId: string, rows: ProductRow[]): Promise<void> {
     const batchSize = 500;
     const errors: Array<{ row: number; error: string }> = [];
@@ -239,9 +224,6 @@ export class BulkUploadService {
     }
   }
 
-  /**
-   * Get upload job status
-   */
   async getJobStatus(jobId: string): Promise<UploadJob> {
     const job = await this.uploadJobRepository.findOne({
       where: { id: jobId },
@@ -254,9 +236,6 @@ export class BulkUploadService {
     return job;
   }
 
-  /**
-   * Get all upload jobs
-   */
   async getAllJobs(): Promise<UploadJob[]> {
     return await this.uploadJobRepository.find({
       order: { createdAt: 'DESC' },
@@ -264,9 +243,6 @@ export class BulkUploadService {
     });
   }
 
-  /**
-   * Delete old completed jobs (cleanup)
-   */
   async cleanupOldJobs(daysOld: number = 30): Promise<void> {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - daysOld);

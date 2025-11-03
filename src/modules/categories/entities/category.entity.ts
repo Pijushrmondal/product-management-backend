@@ -27,11 +27,9 @@ export class Category {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  // Relation to products
   @OneToMany(() => Product, (product) => product.category)
   products: Product[];
 
-  // Generate uniqueId before insert
   @BeforeInsert()
   generateUniqueId() {
     if (!this.uniqueId) {
