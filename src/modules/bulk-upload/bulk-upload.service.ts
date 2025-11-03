@@ -9,7 +9,7 @@ import { UploadJob, UploadJobStatus } from './entities/upload-job.entity';
 import { Product } from '../products/entities/product.entity';
 import { CategoriesService } from '../categories/categories.service';
 import * as fs from 'fs';
-import * as csv from 'csv-parser';
+import csv from 'csv-parser';
 import * as XLSX from 'xlsx';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -128,13 +128,13 @@ export class BulkUploadService {
 
       fs.createReadStream(filePath)
         .pipe(csv())
-        .on('data', (row) => {
-          rows.push(row);
+        .on('data', (row: Record<string, string>) => {
+          rows.push(row as unknown as ProductRow);
         })
         .on('end', () => {
           resolve(rows);
         })
-        .on('error', (error) => {
+        .on('error', (error: Error) => {
           reject(error);
         });
     });
@@ -184,7 +184,7 @@ export class BulkUploadService {
                 await this.categoriesService.findAllWithoutPagination();
               const category = categories.find(
                 (cat) =>
-                  cat.name.toLowerCase() === row.categoryName.toLowerCase(),
+                  cat.name.toLowerCase() === row?.categoryName?.toLowerCase(),
               );
 
               if (!category) {
@@ -209,7 +209,7 @@ export class BulkUploadService {
             name: row.name,
             price: parseFloat(row.price.toString()),
             categoryId,
-            image: row.image || null,
+            image: row?.image || '',
             uniqueId: uuidv4(),
           };
 
@@ -234,7 +234,7 @@ export class BulkUploadService {
         processedRows: Math.min(i + batchSize, rows.length),
         successCount,
         failedCount,
-        errors: errors.length > 0 ? errors : null,
+        errors: errors.length > 0 ? errors : undefined,
       });
     }
   }
