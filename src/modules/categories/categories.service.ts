@@ -11,12 +11,16 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { PaginationDto } from '../../common/dto/pagination.dto';
 import { PaginatedResponse } from '../../common/interfaces/paginated-response.interface';
 import { SearchPaginationDto } from './dto/category.dto';
+import { Product } from '../products/entities/product.entity';
 
 @Injectable()
 export class CategoriesService {
   constructor(
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
+
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>,
   ) {}
 
   /**
@@ -180,10 +184,10 @@ export class CategoriesService {
     };
   }
 
-  /**
-   * Get total categories count
-   */
-  async count(): Promise<number> {
-    return this.categoryRepository.count();
+  async dashboardSummery(): Promise<any> {
+    return {
+      categoryCount: await this.categoryRepository.count(),
+      productCount: await this.productRepository.count(),
+    };
   }
 }

@@ -63,15 +63,6 @@ export class ProductsController {
   }
 
   /**
-   * Get total products count
-   * GET /api/products/count/total
-   */
-  @Get('count/total')
-  count() {
-    return this.productsService.count();
-  }
-
-  /**
    * Get products by category
    * GET /api/products/category/:categoryId?page=1&limit=10&sortByPrice=DESC
    */

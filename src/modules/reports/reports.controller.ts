@@ -21,10 +21,6 @@ import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
-  /**
-   * Generate product report
-   * POST /api/reports/generate
-   */
   @Post('generate')
   @HttpCode(HttpStatus.ACCEPTED)
   async generateReport(@Body() generateReportDto: GenerateReportDto) {
@@ -39,28 +35,16 @@ export class ReportsController {
     };
   }
 
-  /**
-   * Get report job status
-   * GET /api/reports/status/:jobId
-   */
   @Get('status/:jobId')
   async getJobStatus(@Param('jobId') jobId: string) {
     return await this.reportsService.getJobStatus(jobId);
   }
 
-  /**
-   * Get all report jobs
-   * GET /api/reports/jobs
-   */
   @Get('jobs')
   async getAllJobs() {
     return await this.reportsService.getAllJobs();
   }
 
-  /**
-   * Download report file
-   * GET /api/reports/download/:jobId
-   */
   @Get('download/:jobId')
   async downloadReport(
     @Param('jobId') jobId: string,
