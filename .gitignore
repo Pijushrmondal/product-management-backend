@@ -3,6 +3,12 @@
 /node_modules
 /build
 
+
+# file upload
+/uploads/products
+/uploads/reports
+/uploads/temp
+
 # Logs
 logs
 *.log

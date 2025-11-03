@@ -10,6 +10,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { PaginationDto } from '../../common/dto/pagination.dto';
 import { PaginatedResponse } from '../../common/interfaces/paginated-response.interface';
+import { SearchPaginationDto } from './dto/category.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -74,14 +75,13 @@ export class CategoriesService {
    * Search categories by name
    */
   async search(
-    searchTerm: string,
-    paginationDto: PaginationDto,
+    paginationDto: SearchPaginationDto,
   ): Promise<PaginatedResponse<Category>> {
-    const { page, limit, skip } = paginationDto;
+    const { page, limit, skip, query } = paginationDto;
 
     const [categories, total] = await this.categoryRepository.findAndCount({
       where: {
-        name: ILike(`%${searchTerm}%`),
+        name: ILike(`%${query}%`),
       },
       skip,
       take: limit,

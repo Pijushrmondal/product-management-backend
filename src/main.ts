@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -18,7 +19,7 @@ async function bootstrap() {
 
   // Enable CORS
   app.enableCors({
-    origin: true, // In production, specify your frontend URL
+    origin: true, // In production, replace with your frontend URL
     credentials: true,
   });
 
@@ -28,19 +29,38 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
+      transformOptions: { enableImplicitConversion: true },
     }),
   );
 
   // Global prefix
   app.setGlobalPrefix('api');
 
+  // ⚙️ Swagger setup
+  const config = new DocumentBuilder()
+    .setTitle('Product Management API')
+    .setDescription(
+      'API documentation for user, category, and product management system.',
+    )
+    .setVersion('1.0')
+    .addBearerAuth() // enables JWT auth button
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true, // keep token after refresh
+    },
+  });
+
   // Get port from config
   const port = configService.get<number>('PORT', 3000);
 
   await app.listen(port);
-  console.log(`🚀 Application is running on: http://localhost:${port}/api`);
+  console.log(`🚀 Server running at: http://localhost:${port}/api`);
+  console.log(
+    `📘 Swagger Docs available at: http://localhost:${port}/api/docs`,
+  );
 }
+
 bootstrap();

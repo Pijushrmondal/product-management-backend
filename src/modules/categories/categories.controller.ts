@@ -16,6 +16,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { PaginationDto } from '../../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { SearchPaginationDto } from './dto/category.dto';
 
 @Controller('categories')
 @UseGuards(JwtAuthGuard) // Protect all routes with JWT authentication
@@ -55,11 +56,8 @@ export class CategoriesController {
    * GET /api/categories/search?query=electronics&page=1&limit=10
    */
   @Get('search')
-  search(
-    @Query('query') searchTerm: string,
-    @Query() paginationDto: PaginationDto,
-  ) {
-    return this.categoriesService.search(searchTerm, paginationDto);
+  search(@Query() paginationDto: SearchPaginationDto) {
+    return this.categoriesService.search(paginationDto);
   }
 
   /**
