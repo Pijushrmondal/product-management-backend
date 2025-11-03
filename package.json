@@ -31,11 +31,13 @@
     "@nestjs/platform-express": "^11.1.8",
     "@nestjs/swagger": "^11.2.1",
     "@nestjs/typeorm": "^11.0.0",
+    "@types/multer": "^2.0.0",
     "bcrypt": "^6.0.0",
     "bull": "^4.16.5",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "csv-parser": "^3.2.0",
+    "express": "^5.1.0",
     "fast-csv": "^5.0.5",
     "multer": "^2.0.2",
     "passport": "^0.7.0",
@@ -46,9 +48,7 @@
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.27",
     "uuid": "^13.0.0",
-    "xlsx": "^0.18.5",
-    "@types/express": "^5.0.0",
-    "@types/multer": "^2.0.0"
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -61,7 +61,7 @@
     "@types/express": "^5.0.5",
     "@types/jest": "^30.0.0",
     "@types/multer": "^2.0.0",
-    "@types/node": "^22.10.7",
+    "@types/node": "^22.19.0",
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
