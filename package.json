@@ -8,7 +8,7 @@
   "main": "dist/main.js",
   "scripts": {
     "prebuild": "rm -rf dist",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json --skipLibCheck",
     "start": "node dist/main.js",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -56,7 +56,7 @@
     "@nestjs/testing": "^11.0.1",
     "@types/bcrypt": "^6.0.0",
     "@types/bull": "^3.15.9",
-    "@types/express": "^5.0.0",
+    "@types/express": "^5.0.5",
     "@types/jest": "^30.0.0",
     "@types/multer": "^2.0.0",
     "@types/node": "^22.10.7",
